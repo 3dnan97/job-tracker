@@ -1,15 +1,10 @@
+import { Outlet } from "react-router-dom"
 import Nav from "./Nav"
-interface LayoutProps {
-    children: React.ReactNode
-}
-
-export default function Layout({children} : LayoutProps){
+export default function Layout(){
     return(
-        <div className="layout">
+        <>
             <Nav />
-            <div className="content">
-                {children}
-            </div>
-        </div>
+            <Outlet />
+        </>
     )
 }
