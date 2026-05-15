@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useReducer, type Dispatch, type ReactNode } from "react";
+import { createContext, useContext, useReducer, type Dispatch, type ReactNode } from "react";
 import type { Job } from "../types/job";
 
 interface JobsState {
@@ -16,6 +16,21 @@ interface SetJobsSuccessAction {
     payload: Job[];
 }
 
+interface AddJobSuccessAction {
+    type: 'ADD_JOB_SUCCESS';
+    payload: Job;
+}
+
+interface UpdateJobSuccessAction {
+    type: 'UPDATE_JOB_SUCCESS';
+    payload: Job;
+}
+
+interface DeleteJobSuccessAction {
+    type: 'DELETE_JOB_SUCCESS';
+    payload: Job;
+}
+
 interface SetErrorAction {
     type: 'SET_ERROR';
     message: string;
@@ -24,6 +39,9 @@ interface SetErrorAction {
 type JobsAction =
     | SetLoadingAction
     | SetJobsSuccessAction
+    | AddJobSuccessAction
+    | UpdateJobSuccessAction
+    | DeleteJobSuccessAction
     | SetErrorAction
 
 function jobsReducer(state: JobsState, action: JobsAction): JobsState {
@@ -37,6 +55,24 @@ function jobsReducer(state: JobsState, action: JobsAction): JobsState {
         case "SET_JOBS_SUCCESS":
             return {
                 jobs: action.payload,
+                isLoading: false,
+                error: null,
+            }
+        case "ADD_JOB_SUCCESS":
+            return {
+                jobs: [...state.jobs, action.payload],
+                isLoading: false,
+                error: null,
+            }
+        case "UPDATE_JOB_SUCCESS":
+            return {
+                jobs:state.jobs.map(job => job.id === action.payload.id ? action.payload : job),
+                isLoading: false,
+                error: null,
+            }
+        case "DELETE_JOB_SUCCESS":
+            return {
+                jobs: state.jobs.filter(job => job.id !== action.payload.id),
                 isLoading: false,
                 error: null,
             }
