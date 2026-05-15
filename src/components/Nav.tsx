@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom'
 import {STRINGS} from '../i18n/strings'
+import useAuth from '../hooks/useAuth'
 export default function Nav(){
+    const {user, signOut} = useAuth()
     return(
         <>
             <nav className="flex justify-between items-center p-4 border-b border-gray-300 rounded-lg">
@@ -14,10 +16,14 @@ export default function Nav(){
                             <Link to="/jobs" className="hover:text-black cursor-pointer">{STRINGS.nav.jobs}</Link>
                         </li>
                         <li>
-                            <Link to="/user" className="hover:text-black cursor-pointer">{STRINGS.nav.user}</Link>
+                            {user?.user_metadata.name}
                         </li>
                     </ul>
-                    <button className="py-1 px-2 border border-gray-300 rounded-lg hover:bg-blue-900 hover:text-white cursor-pointer">{STRINGS.nav.logout}</button>
+                    <button 
+                        onClick={signOut}
+                        className="py-1 px-2 border border-gray-300 rounded-lg hover:bg-blue-900 hover:text-white cursor-pointer">
+                        {STRINGS.nav.logout}
+                    </button>
                 </div>
             </nav>
             <ul className="md:hidden flex gap-4 mt-4 px-4">
