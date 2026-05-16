@@ -1,5 +1,5 @@
 import { useJobs } from "../context/JobsContext";
-import type { Job } from "../types/job";
+import type { Job, JobForm } from "../types/job";
 import { supabase } from "../utils/supabase";
 
 export default function useJobsApi() {
@@ -20,7 +20,7 @@ export default function useJobsApi() {
         }
     }
 
-    const addJob = async (job: Job) => {
+    const addJob = async (job: JobForm) => {
         dispatch({ type: "SET_LOADING" })
         try {
             const { data, error } = await supabase.from('jobs').insert(job).select().single()
@@ -32,6 +32,7 @@ export default function useJobsApi() {
             if (error instanceof Error) {
                 dispatch({ type: "SET_ERROR", message: error.message })
             }
+            throw error
         }
     }
 

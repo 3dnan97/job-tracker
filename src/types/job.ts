@@ -1,6 +1,6 @@
-export type JobStatus = 'Applied' | 'Interview' | 'Rejected' | 'Offer'
+export type JobStatus = 'Applied' | 'Interview' | 'Rejected' | 'Offer' | ''
 
-export type Confidence = 'high' | 'medium' | 'low'
+export type Confidence = 'high' | 'medium' | 'low' | ''
 
 export interface AttachedFile {
     name: string,
@@ -23,6 +23,11 @@ export interface Job {
     created_at: string; // ISO 8601 string
     updated_at?: string; // ISO 8601 string
 }
+
+export type JobForm = Omit<
+    Job,
+    'id' | 'created_at' | 'updated_at'
+>
 
 export interface JobFilter{
     status?:JobStatus | 'All';
