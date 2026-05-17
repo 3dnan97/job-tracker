@@ -8,10 +8,10 @@ export default function useJobsApi() {
     const fetchJobs = async () => {
         dispatch({ type: 'SET_LOADING' })
         try {
-            const { data, error } = await supabase.from('jobs').select()
-            if (error) {
-                throw error
-            }
+            const { data, error } = await supabase.from('jobs').select().order('date_applied', { ascending: false })
+
+            if (error) throw error
+
             dispatch({ type: 'SET_JOBS_SUCCESS', payload: data })
         } catch (error) {
             if (error instanceof Error) {
@@ -24,9 +24,9 @@ export default function useJobsApi() {
         dispatch({ type: "SET_LOADING" })
         try {
             const { data, error } = await supabase.from('jobs').insert(job).select().single()
-            if (error) {
-                throw error
-            }
+
+            if (error) throw error
+
             dispatch({ type: "ADD_JOB_SUCCESS", payload: data })
         } catch (error) {
             if (error instanceof Error) {
@@ -36,18 +36,19 @@ export default function useJobsApi() {
         }
     }
 
-    const updateJob = async (job: Job) => {
+    const updateJob = async (job: JobForm, jobId: string) => {
         dispatch({ type: "SET_LOADING" })
         try {
-            const { data, error } = await supabase.from('jobs').update(job).eq('id', job.id).select().single()
-            if (error) {
-                throw error
-            }
+            const { data, error } = await supabase.from('jobs').update(job).eq('id', jobId).select().single()
+
+            if (error) throw error
+
             dispatch({ type: "UPDATE_JOB_SUCCESS", payload: data })
         } catch (error) {
             if (error instanceof Error) {
                 dispatch({ type: "SET_ERROR", message: error.message })
             }
+            throw error
         }
     }
 
@@ -55,16 +56,24 @@ export default function useJobsApi() {
         dispatch({ type: "SET_LOADING" })
         try {
             const { data, error } = await supabase.from('jobs').delete().eq('id', jobId).select().single()
-            if (error) {
-                throw error
-            }
+            if (error) throw error
+
             dispatch({ type: "DELETE_JOB_SUCCESS", payload: data })
         } catch (error) {
             if (error instanceof Error) {
                 dispatch({ type: "SET_ERROR", message: error.message })
             }
+            throw error
         }
     }
 
-    return { fetchJobs, addJob, updateJob, deleteJob }
+    const fetchJobById = async (jobId: string) : Promise<Job> => {
+        const { data, error } = await supabase.from('jobs').select().eq('id', jobId).single()
+
+        if (error) throw error
+
+        return data
+    }
+
+    return { fetchJobs, addJob, updateJob, deleteJob, fetchJobById }
 }
