@@ -28,7 +28,7 @@ export default function useAuth() {
 
         const { data } = supabase.auth.onAuthStateChange((event, session) => {
             if (event === 'SIGNED_IN') {
-                setUser(session.user)
+                setUser(session?.user ?? null)
                 setSession(session)
             } else if (event === 'SIGNED_OUT') {
                 setUser(null)
