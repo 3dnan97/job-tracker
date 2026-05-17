@@ -53,7 +53,7 @@ export default function JobForm() {
         e.preventDefault()
         const { role, company, status } = job
         if (!role || !company || !status) {
-            setError('All required filed must be filled.')
+            setError('All required fields must be filled.')
             return
         }
         const jobToSubmit = { ...job }
@@ -66,7 +66,11 @@ export default function JobForm() {
             jobToSubmit.user_id = user.id
         }
         try {
-            isEditMode ? await updateJob(job, id) : await addJob(jobToSubmit)
+            if (isEditMode && id) { 
+                await updateJob(jobToSubmit, id) 
+            } else { 
+                await addJob(jobToSubmit) 
+            }
             navigate(isEditMode ? '/jobs' : '/')
 
         } catch (err) {
@@ -123,10 +127,10 @@ export default function JobForm() {
                         </div>
                     </div>
 
-                    <label htmlFor="job_description" className="font-semibold">Job Describtion</label>
+                    <label htmlFor="job_description" className="font-semibold">Job Description</label>
                     <textarea name="job_description" id="job_description" onChange={handleChange} value={job.job_description} placeholder="Paste the job description or key requirements here" className="min-h-[calc(2*var(--spacing-input))] px-2 rounded-10px border border-brand-border" />
 
-                    <label htmlFor="company_url" className="font-semibold">Company Webiste link</label>
+                    <label htmlFor="company_url" className="font-semibold">Company Website Link</label>
                     <input type="text" name="company_url" id="company_url" onChange={handleChange} value={job.company_url} placeholder="https://company.com/careers" className="h-input w-full px-2 rounded-10px border border-brand-border" />
 
                     <label htmlFor="notes" className="font-semibold">Additional Notes</label>

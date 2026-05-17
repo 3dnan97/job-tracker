@@ -43,7 +43,7 @@ export default function Dashboard() {
             </Link>
             <div className="flex flex-col gap-2 p-3 rounded-[12px] bg-white border border-brand-border">
                 <div className="flex justify-between">
-                    {jobs.length > 0 && <h1 className="text-md font-semibold">Recent Applictions</h1>}
+                    {jobs.length > 0 && <h1 className="text-md font-semibold">Recent Applications</h1>}
                     <Link to='/jobs' className="text-sm font-medium text-brand-blue hover:text-brand-dark duration-200">View all jobs</Link>
                 </div>
                 {isLoading
