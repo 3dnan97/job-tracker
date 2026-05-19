@@ -67,7 +67,7 @@ export default function useJobsApi() {
         }
     }
 
-    const fetchJobById = async (jobId: string) : Promise<Job> => {
+    const fetchJobById = async (jobId: string): Promise<Job> => {
         const { data, error } = await supabase.from('jobs').select().eq('id', jobId).single()
 
         if (error) throw error

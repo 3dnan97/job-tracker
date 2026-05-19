@@ -59,7 +59,7 @@ export default function Dashboard() {
                             ? <div className="flex justify-center items-center p-4">
                                 <div className="text-md font-semibold text-brand-slate">No recent applications found.</div>
                             </div>
-                            : jobs.map(({ id, role, date_applied, status }) => <JobRow key={id} jobTitle={role} date={date_applied} state={status} />)
+                            : jobs.map(({ id, role, date_applied, status }) => <JobRow key={id} id={id} jobTitle={role} date={date_applied} state={status} />)
                 }
             </div>
         </div>

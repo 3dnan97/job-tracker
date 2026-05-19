@@ -7,7 +7,6 @@ export default function ProtectedRoute() {
 
     if (loading) {
         return <div className="min-h-screen flex items-center justify-center">
-            {/* The spinner element */}
             <div className="w-10 h-10 border-4 border-brand-border border-t-brand-blue rounded-full animate-spin"></div>
         </div>
     }
@@ -16,8 +15,8 @@ export default function ProtectedRoute() {
     }
 
     return (
-    <JobsProvider>
-        <Outlet />
-    </JobsProvider>
+        <JobsProvider>
+            <Outlet />
+        </JobsProvider>
     )
 }
