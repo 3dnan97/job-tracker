@@ -64,6 +64,7 @@ export default function JobDetail() {
     }, [])
 
     async function handleDelete(){
+        if (!job) return
         setIsDeleting(true)
         try {
             await deleteJob(job.id)
@@ -122,7 +123,7 @@ export default function JobDetail() {
                                 </div>
                             </div>
                             {
-                                showDeleteConfirmation && <div className="fixed inset-0 z-10 flex justify-center items-end md:items-center bg-black/40 px-4 py-6">
+                                showDeleteConfirmation && job && <div className="fixed inset-0 z-10 flex justify-center items-end md:items-center bg-black/40 px-4 py-6">
                                     <div className="w-full max-w-md flex flex-col gap-3 p-4 rounded-[12px] bg-white border border-brand-border">
                                         <div>
                                             <h2 className="text-lg font-bold">Delete application?</h2>
