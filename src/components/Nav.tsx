@@ -1,6 +1,7 @@
 import { Link, NavLink } from 'react-router-dom'
 import {STRINGS} from '../i18n/strings'
 import useAuth from '../hooks/useAuth'
+import Button from './Button'
 export default function Nav(){   
     const {user, signOut} = useAuth()
     return(
@@ -30,11 +31,12 @@ export default function Nav(){
                             {user?.user_metadata.name}
                         </li>
                     </ul>
-                    <button 
+                    <Button
+                        text={STRINGS.nav.logout}
                         onClick={signOut}
-                        className="py-1 px-2 rounded-lg font-semibold text-[13px] hover:text-white border border-brand-border hover:bg-brand-blue duration-200 cursor-pointer">
-                        {STRINGS.nav.logout}
-                    </button>
+                        color='white'
+                        className='hover:!bg-brand-blue hover:border-brand-blue hover:text-white'
+                    />
                 </div>
             </nav>
             <ul className="flex gap-2 px-4 pb-3 md:hidden">

@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"
+import Button from "../components/Button"
 
 export default function NotFound() {
     return (
@@ -7,8 +7,8 @@ export default function NotFound() {
             <h2 className="text-2xl font-bold">Page not found</h2>
             <p className="text-xl">Sorry, the page you are looking for does not exist. Please check the URL and try again.</p>
             <div className="flex gap-2">
-                <Link to={'/'} className="px-3 py-2 md:px-4 rounded-10px font-semibold text-sm text-white bg-brand-blue hover:text-brand-blue hover:bg-brand-border duration-200">Go to Dashboard</Link>
-                <Link to={'/jobs'} className="px-3 py-2 md:px-4 rounded-10px font-semibold text-sm bg-white border border-brand-border hover:bg-brand-blue hover:text-white hover:border-brand-blue duration-200">View Jobs</Link>
+                <Button text="Go to Dashboard" to="/" color="blue"/>
+                <Button text="View Jobs" to="/jobs" color="white"/>
             </div>
         </div>
     )

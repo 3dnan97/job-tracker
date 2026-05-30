@@ -4,6 +4,7 @@ import JobRow from "../components/JobRow";
 import { useJobs } from "../context/JobsContext";
 import useJobsApi from "../hooks/useJobsApi";
 import { useEffect } from "react";
+import Button from "../components/Button";
 
 export default function Dashboard() {
     const { state } = useJobs()
@@ -23,9 +24,7 @@ export default function Dashboard() {
                     <p className="text-sm md:text-[16px] text-brand-slate">Track momentum and next actions</p>
                 </div>
                 <div className="hidden md:flex justify-end items-end">
-                    <Link to="/jobs/new" className="flex justify-center items-center px-[18px] py-3 rounded-10px text-xs font-semibold text-white hover:text-brand-blue bg-brand-blue hover:bg-brand-border duration-200">
-                        + Add Job
-                    </Link>
+                    <Button text="+ Add Job" to="/jobs/new" />
                 </div>
             </div>
             <div className="flex flex-col md:flex-row gap-2">
@@ -38,9 +37,7 @@ export default function Dashboard() {
                     <StateCard title="Rejected" count={cardCount("Rejected")} isLoading={isLoading} />
                 </div>
             </div>
-            <Link to="/jobs/new" className="flex md:hidden justify-center items-center h-input rounded-10px text-sm font-semibold text-white bg-brand-blue">
-                + Add Job
-            </Link>
+            <Button text="+ Add Job" to="/jobs/new" className="flex md:hidden justify-center items-center"/>
             <div className="flex flex-col gap-2 p-3 rounded-[12px] bg-white border border-brand-border">
                 <div className="flex justify-between">
                     {jobs.length > 0 && <h1 className="text-md font-semibold">Recent Applications</h1>}
@@ -51,9 +48,9 @@ export default function Dashboard() {
                         <div className="w-10 h-10 border-4 border-brand-border border-t-brand-blue rounded-full animate-spin"></div>
                     </div>
                     : error
-                        ? <div className="flex flex-col gap-2 justify-center items-center p-4 font-semibold">
+                        ? <div className="flex flex-col gap-2 justify-center items-center text-center p-4 font-semibold">
                             <div className="text-md text-brand-slate">Could not load your applications. Please check your connection and try again.</div>
-                            <button type="button" onClick={() => fetchJobs()} className="py-2 px-3 rounded-10px text-white hover:text-brand-blue bg-brand-blue hover:bg-brand-border duration-200 cursor-pointer">Try Again</button>
+                            <Button text="Try Again" onClick={() => fetchJobs()} className="text-[16px]" />
                         </div>
                         : (jobs.length === 0)
                             ? <div className="flex justify-center items-center p-4">

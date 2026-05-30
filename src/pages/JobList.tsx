@@ -6,8 +6,9 @@ import { Link } from "react-router-dom";
 import JobListCard from "../components/JobListCard";
 import { useJobs } from "../context/JobsContext";
 import useJobsApi from "../hooks/useJobsApi";
-import { useEffect, useState, type ChangeEvent } from "react";
+import { useEffect, useState } from "react";
 import { type Job } from "../types/job";
+import Button from "../components/Button";
 
 export default function JobList() {
     const { state } = useJobs()
@@ -61,7 +62,7 @@ export default function JobList() {
                     <h1 className="text-[28px] md:text-[32px] font-bold">Jobs</h1>
                     <p className="text-sm md:text-[16px] text-brand-slate">{`${jobs.length} tracked application${jobs.length === 1 ? '' : 's'}`}</p>
                 </div>
-                <Link to={'new'} className="self-end py-[10px] px-[14px] rounded-10px text-sm font-semibold text-white hover:text-brand-blue bg-brand-blue hover:bg-brand-border duration-200">+ New Job</Link>
+                <Button text="+ New Job" to="new" className="self-end" />
             </div>
             <div className="flex flex-col md:flex-row gap-2 md:gap-3">
                 <div className="flex gap-2 md:gap-3">
@@ -80,7 +81,7 @@ export default function JobList() {
                         <input type="text" name="search" id="search" onChange={(e) => setSearchValue(e.currentTarget.value)} value={searchValue} placeholder="company or role" className="w-full outline-none md:w-[80%]" />
                     </div>
                 </div>
-                {(selectValue || searchValue) && <button type="button" onClick={() => {setSearchValue(''); setSelectValue('');}} className="self-end flex justify-center items-center px-[14px] h-input rounded-10px text-brand-slate border border-brand-border hover:bg-white/50 duration-200 cursor-pointer">Clear Filters</button>}
+                {(selectValue || searchValue) && <Button text="Clear Filters" onClick={() => {setSearchValue(''); setSelectValue('');}} color="white" className="self-end h-input"/>}
             </div>
             <div className="flex flex-col gap-2 p-4 rounded-[14px] bg-white border border-brand-border">
                 {
@@ -93,8 +94,8 @@ export default function JobList() {
                                 <h2 className="text-2xl font-bold">Couldn't Load your applications</h2>
                                 <p>Check your connection and try again.</p>
                                 <div className="flex gap-2 font-semibold">
-                                    <button type="button" onClick={() => fetchJobs()} className="flex justify-center items-center px-[14px] py-[10px] rounded-10px text-white bg-red-900 hover:bg-red-900/90 duration-200 cursor-pointer">Retry</button>
-                                    <Link to={'/'} className="flex justify-center items-center px-[14px] py-[10px] rounded-10px border border-red-900/50 hover:border-red-900/40 hover:bg-red-900/10 duration-200">Back to Dashboard</Link>
+                                    <Button text="Retry" onClick={() => fetchJobs()} color="red" className="!text-base"/>
+                                    <Button text="Back to Dashboard" to={'/'} color="white" className="!text-base border-red-900/50 hover:border-red-900/40 hover:bg-red-900/20"/>
                                 </div>
                             </div>
                             : (uiJobs.length === 0)

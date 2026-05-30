@@ -1,8 +1,9 @@
 import { useEffect, useState, type ChangeEvent, type SyntheticEvent } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import type { JobForm } from "../types/job";
 import useJobsApi from "../hooks/useJobsApi";
 import useAuth from "../hooks/useAuth";
+import Button from "../components/Button";
 
 export default function JobForm() {
     const { user } = useAuth()
@@ -49,6 +50,7 @@ export default function JobForm() {
             [name]: value
         }))
     }
+
     async function onFormSubmit(e: SyntheticEvent<HTMLFormElement, SubmitEvent>) {
         e.preventDefault()
         const { role, company, status } = job
@@ -71,8 +73,7 @@ export default function JobForm() {
             } else { 
                 await addJob(jobToSubmit) 
             }
-            navigate(isEditMode ? '/jobs' : '/')
-
+            navigate(-1)
         } catch (err) {
             setError('An error occurred. Please reload the page and try again!')
         }
@@ -85,7 +86,7 @@ export default function JobForm() {
                     <span className="text-2xl font-bold text-brand-slate">
                         {fetchError}
                     </span>
-                    <Link to={'/jobs'} className="py-2 px-3 rounded-10px text-semibold text-white bg-brand-blue hover:text-brand-blue hover:bg-brand-border">Back to jobs</Link>
+                    <Button text="Back to jobs" to="/jobs" />
                 </div>
                 : <form onSubmit={onFormSubmit} className="flex flex-col gap-2 p-3 rounded-[12px] border border-brand-border bg-white">
                     <label htmlFor="role" className="font-semibold">Role / Job Title <span className="text-red-600">*</span></label>
@@ -146,10 +147,8 @@ export default function JobForm() {
 
                     <p className="text-sm text-red-600">{error}</p>
                     <div className="flex md:justify-end gap-2 font-semibold">
-                        <Link to={'/'} className="flex-1 md:flex-0 md:px-[14px] flex justify-center items-center h-input rounded-10px border border-brand-border">Cancel</Link>
-                        <button type="submit" className="flex-1 md:flex-0 md:px-[14px] h-input rounded-10px border border-brand-blue text-white whitespace-nowrap bg-brand-blue cursor-pointer">
-                            Save {isEditMode ? 'Changes' : 'Job'}
-                        </button>
+                        <Button text="Cancel" to={isEditMode ? '..' : '/'} color="white" className="flex-1 md:flex-initial text-[16px]" />
+                        <Button text={`Save ${isEditMode ? 'Changes' : 'Job'}`} type="submit" className="flex-1 md:flex-initial text-[16px]" />
                     </div>
                 </form>}
         </div>

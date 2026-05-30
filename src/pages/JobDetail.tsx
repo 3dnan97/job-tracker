@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from "react"
-import { Link, useNavigate, useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import useJobsApi from "../hooks/useJobsApi"
 import type { Job } from "../types/job"
 import DetailsCard from "../components/DetailsCard"
+import Button from "../components/Button"
 
 export default function JobDetail() {
     const { id } = useParams()
@@ -84,7 +85,7 @@ export default function JobDetail() {
                         <span className="text-2xl font-bold text-brand-slate">
                             {fetchError}
                         </span>
-                        <Link to={'/jobs'} className="py-2 px-3 rounded-10px text-semibold text-white bg-brand-blue hover:text-brand-blue hover:bg-brand-border">Back to jobs</Link>
+                        <Button text="Back to jobs" to="/jobs" />
                     </div>
                     : isLoading
                         ? <div className="min-h-[200px] flex items-center justify-center">
@@ -97,8 +98,8 @@ export default function JobDetail() {
                                     <p className="text-xs text-brand-slate">{job?.location} &bull; Applied {job?.date_applied}</p>
                                 </div>
                                 <div className="md:flex-1 flex justify-center items-center md:items-start gap-2">
-                                    <Link to={`/jobs/${id}/edit`} className="flex-1 py-2 rounded-10px text-center text-sm border border-brand-border bg-white hover:bg-brand-border duration-200">Edit</Link>
-                                    <button type="button" onClick={() => setShowDeleteConfirmation(true)} className="flex-1 py-2 rounded-10px text-center text-sm text-white bg-red-900 hover:bg-red-700 duration-200 cursor-pointer">Delete</button>
+                                    <Button text="Edit" to="edit" color="white" className="flex-1"/>
+                                    <Button text="Delete" onClick={() => setShowDeleteConfirmation(true)} color="red" className="flex-1"/>
                                 </div>
                             </div>
                             <div className="flex flex-col md:flex-row md:items-start gap-4">
@@ -131,12 +132,8 @@ export default function JobDetail() {
                                         </div>
                                         { deletionError && <p className="text-sm text-red-600">{deletionError}</p> }
                                         <div className="flex gap-2">
-                                            <button type="button" onClick={() => setShowDeleteConfirmation(false)} className="flex-1 h-input rounded-10px border border-brand-border hover:bg-brand-border duration-200 cursor-pointer">
-                                                Cancel
-                                            </button>
-                                            <button type="button" onClick={() => handleDelete()} className="flex-1 h-input rounded-10px text-white bg-red-900 hover:bg-red-800 duration-200 disabled:bg-brand-slate cursor-pointer" disabled={isDeleting}>
-                                                {isDeleting ? 'Deleting...' : 'Delete'}
-                                            </button>
+                                            <Button text="Cancel" onClick={() => setShowDeleteConfirmation(false)} color="white" className="flex-1 font-bold"/>
+                                            <Button text={isDeleting ? 'Deleting...' : 'Delete'} onClick={() => handleDelete()} color="red" className="flex-1" disabled={isDeleting} />
                                         </div>
                                     </div>
                                 </div> 

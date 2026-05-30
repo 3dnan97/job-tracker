@@ -1,6 +1,7 @@
 import { useNavigate, Navigate } from "react-router-dom"
 import useAuth from "../hooks/useAuth"
 import { useState, type SyntheticEvent } from "react"
+import Button from "../components/Button"
 
 export default function Login() {
     const [isSignedUp, setIsSignedUp] = useState<boolean>(true)
@@ -111,15 +112,15 @@ export default function Login() {
                             <p className="text-sm text-brand-slate">
                                 We've sent a verification link. Please check your inbox and click the link to activate your account.
                             </p>
-                            <button
+                            <Button
+                                text="Back to Login"
                                 onClick={() => {
                                     setIsSignedUp(true)
                                     setShowConfirmation(false)
                                 }}
-                                className="w-full bg-brand-border text-brand-dark p-2 rounded-10px font-semibold mt-4 cursor-pointer"
-                            >
-                                Back to Login
-                            </button>
+                                color="blue"
+                                className="w-full"
+                            />
                         </div>
                         : <form onSubmit={onFormSubmit} className="flex flex-col gap-2">
                                 <p className="text-red-600">{errorMsg}</p>
@@ -148,7 +149,7 @@ export default function Login() {
                                 }
                                 <button className={`flex justify-center items-center ${isSubmitting ? "bg-brand-slate cursor-wait" : "bg-brand-blue cursor-pointer"} text-sm font-semibold text-white p-2 rounded-10px h-input`} disabled={isSubmitting} type="submit">
                                     {isSubmitting ? 
-                                        <div className="w-7 h-7 border-4 border-brand-border border-t-brand-blue rounded-full animate-spin"></div>
+                                        <div className="w-7 h-7 border-4 border-brand-border border-t-brand-slate rounded-full animate-spin"></div>
                                         : `Sign ${isSignedUp ? `In` : `Up`}`}
                                 </button>
                             </form>
